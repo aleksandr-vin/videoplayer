@@ -29,11 +29,19 @@
     </p>
   </video>
 
+  <h3 id="video-url"></h3>
+
   <script src="https://vjs.zencdn.net/7.17.0/video.min.js"></script>
 
   <script>
     const player = videojs('my-video');
     const url = window.top.location.hash.substr(1);
+    const videoUrlElement = document.getElementById("video-url");
+    if (url != "") {
+      videoUrlElement.textContent = url;
+    } else {
+      videoUrlElement.textContent = "Append '#' and a video file url to current page to watch it";
+    }
     player.src(url);
   </script>
 </body>
