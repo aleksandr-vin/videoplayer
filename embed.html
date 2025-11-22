@@ -18,19 +18,11 @@
   <script>
     const player = videojs('my-video');
     const url = window.top.location.hash.substr(1);
-    const videoUrlElement = document.getElementById("video-url");
     if (url != "") {
-      videoUrlElement.textContent = url;
+      console.log("url:", url);
     } else {
-      videoUrlElement.textContent = "Append '#' and a video file url to current page to watch it";
-      const helpSectionElement = document.getElementById("help-section");
-      helpSectionElement.setAttribute('hidden', true);
+      console.log("Append '#' and a video file url to current page to watch it");
     }
     player.src(url);
-
-    if (url != "") {
-      const tryLocalButtonElement = document.getElementById("try-local-button");
-      tryLocalButtonElement.setAttribute("href", tryLocalButtonElement.getAttribute("href") + url)
-    }
   </script>
 </body>
