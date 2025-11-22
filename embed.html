@@ -19,7 +19,7 @@
     const player = videojs('my-video');
     const url = window.location.hash.substring(1);
     if (url != "") {
-      console.log("url:", url);
+      // console.log("url:", url);
       player.src(url);
     } else {
       console.log("Append '#' and a video file url to current page to watch it");
