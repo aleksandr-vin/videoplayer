@@ -17,12 +17,20 @@
 
   <script>
     const player = videojs('my-video');
-    const url = window.top.location.hash.substr(1);
+    const url = window.location.hash.substring(1);
     if (url != "") {
       console.log("url:", url);
+      player.src(url);
     } else {
       console.log("Append '#' and a video file url to current page to watch it");
     }
-    player.src(url);
   </script>
 </body>
+
+<!--
+<div class="embed-container">
+  <iframe src="https://aleksandr.vin/videoplayer/embed.html#https://your/video/url/somewhere" width="500" height="281"
+    frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen>
+  </iframe>
+</div>
+//-->
