@@ -1,0 +1,36 @@
+<head>
+  <link href="https://vjs.zencdn.net/8.23.3/video-js.css" rel="stylesheet" />
+  <link href="https://unpkg.com/video.js@8/dist/video-js.min.css" rel="stylesheet" />
+  <link href="https://unpkg.com/@videojs/themes@1/dist/fantasy/index.css" rel="stylesheet" />
+</head>
+
+<body>
+  <video id="my-video" class="video-js vjs-theme-fantasy" controls preload="auto" width="640px">
+    <p class="vjs-no-js">
+      To view this video please enable JavaScript, and consider upgrading to a
+      web browser that
+      <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+    </p>
+  </video>
+
+  <script src="https://vjs.zencdn.net/8.23.3/video.min.js"></script>
+
+  <script>
+    const player = videojs('my-video');
+    const url = window.top.location.hash.substr(1);
+    const videoUrlElement = document.getElementById("video-url");
+    if (url != "") {
+      videoUrlElement.textContent = url;
+    } else {
+      videoUrlElement.textContent = "Append '#' and a video file url to current page to watch it";
+      const helpSectionElement = document.getElementById("help-section");
+      helpSectionElement.setAttribute('hidden', true);
+    }
+    player.src(url);
+
+    if (url != "") {
+      const tryLocalButtonElement = document.getElementById("try-local-button");
+      tryLocalButtonElement.setAttribute("href", tryLocalButtonElement.getAttribute("href") + url)
+    }
+  </script>
+</body>
