@@ -2,38 +2,99 @@
   <link href="https://vjs.zencdn.net/8.23.3/video-js.css" rel="stylesheet" />
   <link href="https://unpkg.com/video.js@8/dist/video-js.min.css" rel="stylesheet" />
   <link href="https://unpkg.com/@videojs/themes@1/dist/fantasy/index.css" rel="stylesheet" />
+  <style>
+    html,
+    body {
+      margin: 0;
+      height: 100%;
+      /* background: #000000; */
+    }
+
+    p {
+      margin-left: 10pt;
+      font-size: 1.5rem;
+      line-height: 1.2;
+    }
+
+    #my-video {
+      width: 100vw;
+      height: 100vh;
+      object-fit: contain;
+      display: block;
+    }
+
+    #centered {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 2.5rem;
+      line-height: 1.4;
+    }
+  </style>
 </head>
 
 <body>
-  <video id="my-video" class="video-js vjs-theme-fantasy" controls preload="auto" width="640px">
-    <p class="vjs-no-js">
-      To view this video please enable JavaScript, and consider upgrading to a
-      web browser that
-      <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+  <div id="main-section">
+    <div id="video-elem" hidden>
+      <video id="my-video" class="video-js vjs-theme-fantasy" controls preload="auto">
+        <p class="vjs-no-js">
+          To view this video please enable JavaScript, and consider upgrading to a
+          web browser that
+          <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+        </p>
+      </video>
+    </div>
+
+    <p>
+      Download <a id="video-url" href="" target="_blank"></a> video
     </p>
-  </video>
 
-  <h3 id="video-url"></h3>
+    <p>
+      If not working, <a href="local.html#" id="try-local-button">try without external js/css</a>c
+    </p>
+  </div>
 
-  <p id="help-section">
-    If not working, <a href="local.html#" id="try-local-button">try without external js/css</a>
-  </p>
+  <div id="no-url-section" hidden>
+    <div id="centered" hidden>
+      <center>
+        Append <code>#</code> and a video file url to current page to watch it, like
+        <code>#https://my.video/file.mov</code>
+      </center>
+    </div>
+  </div>
 
   <script src="https://vjs.zencdn.net/8.23.3/video.min.js"></script>
 
   <script>
     const url = window.top.location.hash.substr(1);
+
     const videoUrlElement = document.getElementById("video-url");
+    videoUrlElement.setAttribute("href", url);
+    videoUrlElement.textContent = url;
+
+    const tryLocalButtonElement = document.getElementById("try-local-button");
+    tryLocalButtonElement.setAttribute("href", tryLocalButtonElement.getAttribute("href") + url);
+
     if (url != "") {
-      const player = videojs('my-video');
-      player.src(url);
-      videoUrlElement.textContent = url;
-      const tryLocalButtonElement = document.getElementById("try-local-button");
-      tryLocalButtonElement.setAttribute("href", tryLocalButtonElement.getAttribute("href") + url)
+      console.log("Video url found");
+      window.addEventListener("load", (event) => {
+        console.log("page loaded");
+        const player = videojs('my-video');
+        player.src(url);
+        const noUrlSection = document.getElementById('video-elem');
+        noUrlSection.removeAttribute("hidden");
+      });
     } else {
-      videoUrlElement.textContent = "Append '#' and a video file url to current page to watch it";
-      const helpSectionElement = document.getElementById("help-section");
-      helpSectionElement.setAttribute('hidden', true);
+      console.log("No url found");
+
+      const mainSection = document.getElementById("main-section");
+      mainSection.setAttribute("hidden", true);
+
+      const noUrlSection = document.getElementById("no-url-section");
+      noUrlSection.removeAttribute("hidden");
     }
   </script>
 </body>
