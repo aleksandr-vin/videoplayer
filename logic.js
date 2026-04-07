@@ -2,8 +2,7 @@ let url = window.top.location.hash.substr(1);
 const params = new URLSearchParams(window.top.location.search);
 
 const videoUrlElement = document.getElementById("video-url");
-videoUrlElement.setAttribute("href", url);
-videoUrlElement.textContent = url;
+
 
 function applyInitialPosition(player) {
   const timeParam = params.get('t');
@@ -51,6 +50,8 @@ if (url != "") {
     url = "https://aleksandrvin-pub.s3.eu-central-003.backblazeb2.com/" + url;
     console.log("Result", url);
   }
+  videoUrlElement.setAttribute("href", url);
+  videoUrlElement.textContent = url;
   window.addEventListener("load", (event) => {
     console.log("page loaded");
     const player = videojs('my-video');
