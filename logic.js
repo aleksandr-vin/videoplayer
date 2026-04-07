@@ -1,4 +1,4 @@
-const url = window.top.location.hash.substr(1);
+let url = window.top.location.hash.substr(1);
 const params = new URLSearchParams(window.top.location.search);
 
 const videoUrlElement = document.getElementById("video-url");
