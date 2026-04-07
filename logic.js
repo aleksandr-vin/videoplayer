@@ -47,8 +47,9 @@ function startTimeUrlSync(player) {
 if (url != "") {
   console.log("Video url found");
   if (!url.startsWith("https://") || !url.startsWith("http://")) {
-    console.log("Prepending url with my home-blob");
+    console.log("Prepending url with my home-blob", url);
     url = "https://aleksandrvin-pub.s3.eu-central-003.backblazeb2.com/" + url;
+    console.log("Result", url);
   }
   window.addEventListener("load", (event) => {
     console.log("page loaded");
