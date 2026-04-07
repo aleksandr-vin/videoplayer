@@ -1,39 +1,8 @@
 <head>
-  <link href="https://vjs.zencdn.net/8.23.3/video-js.css" rel="stylesheet" />
-  <link href="https://unpkg.com/video.js@8/dist/video-js.min.css" rel="stylesheet" />
-  <link href="https://unpkg.com/@videojs/themes@1/dist/fantasy/index.css" rel="stylesheet" />
-  <style>
-    html,
-    body {
-      margin: 0;
-      height: 100%;
-      /* background: #000000; */
-    }
-
-    p {
-      margin-left: 10pt;
-      font-size: 1.5rem;
-      line-height: 1.2;
-    }
-
-    #my-video {
-      width: 100vw;
-      height: 100vh;
-      object-fit: contain;
-      display: block;
-    }
-
-    #centered {
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      font-size: 2.5rem;
-      line-height: 1.4;
-    }
-  </style>
+  <link href="video-js.css" rel="stylesheet" />
+  <link href="video-js.min.css" rel="stylesheet" />
+  <link href="index.css" rel="stylesheet" />
+  <link href="main.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -49,11 +18,11 @@
     </div>
 
     <p>
-      Download <a id="video-url" href="" target="_blank"></a> video
+      Download <a id="video-url" href="" target="_blank"></a> video file
     </p>
 
     <p>
-      If not working, <a href="local.html#" id="try-local-button">try without external js/css</a>c
+      Report an <a href="https://github.com/aleksandr-vin/videoplayer/issues">issue</a>
     </p>
   </div>
 
@@ -66,80 +35,6 @@
     </div>
   </div>
 
-  <script src="https://vjs.zencdn.net/8.23.3/video.min.js"></script>
-
-  <script>
-    const url = window.top.location.hash.substr(1);
-    const params = new URLSearchParams(window.top.location.search);
-
-    const videoUrlElement = document.getElementById("video-url");
-    videoUrlElement.setAttribute("href", url);
-    videoUrlElement.textContent = url;
-
-    const tryLocalButtonElement = document.getElementById("try-local-button");
-    tryLocalButtonElement.setAttribute("href", tryLocalButtonElement.getAttribute("href") + url);
-
-    function applyInitialPosition(player) {
-      const timeParam = params.get('t');
-
-      if (timeParam !== null) {
-        const seconds = Number(timeParam);
-        if (!Number.isNaN(seconds) && seconds >= 0) {
-          player.currentTime(seconds);
-        }
-      }
-    }
-
-    function startTimeUrlSync(player) {
-      let lastSyncedSecond = null;
-
-      function syncCurrentTimeToUrl() {
-        const currentSecond = Math.floor(player.currentTime());
-        if (currentSecond === lastSyncedSecond) {
-          return;
-        }
-
-        lastSyncedSecond = currentSecond;
-
-        const nextUrl = new URL(window.location.href);
-        nextUrl.searchParams.set('t', String(currentSecond));
-        window.history.replaceState(null, '', nextUrl.toString());
-      }
-
-      window.setInterval(() => {
-        if (player.paused()) {
-          return;
-        }
-
-        syncCurrentTimeToUrl();
-      }, 1000);
-
-      player.on('seeked', syncCurrentTimeToUrl);
-      player.on('pause', syncCurrentTimeToUrl);
-    }
-
-    if (url != "") {
-      console.log("Video url found");
-      window.addEventListener("load", (event) => {
-        console.log("page loaded");
-        const player = videojs('my-video');
-        player.src(url);
-        player.one('loadedmetadata', () => {
-          applyInitialPosition(player);
-          startTimeUrlSync(player);
-        });
-
-        const noUrlSection = document.getElementById('video-elem');
-        noUrlSection.removeAttribute("hidden");
-      });
-    } else {
-      console.log("No url found");
-
-      const mainSection = document.getElementById("main-section");
-      mainSection.setAttribute("hidden", true);
-
-      const noUrlSection = document.getElementById("no-url-section");
-      noUrlSection.removeAttribute("hidden");
-    }
-  </script>
+  <script src="video.min.js"></script>
+  <script src="logic.js"></script>
 </body>

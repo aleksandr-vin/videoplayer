@@ -11,3 +11,13 @@
 ### Backblaze
 
 See https://www.backblaze.com/blog/roll-camera-streaming-media-from-backblaze-b2/
+
+## Dev
+
+### Upgrades
+
+    wget https://vjs.zencdn.net/8.23.3/video-js.css
+    wget https://unpkg.com/video.js@8/dist/video-js.min.css
+    wget https://unpkg.com/@videojs/themes@1/dist/fantasy/index.css
+    wget https://vjs.zencdn.net/8.23.3/video.min.js
+
